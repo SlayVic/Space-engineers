@@ -17,7 +17,7 @@ public sealed class Program : MyGridProgram
   // НАЧАЛО СКРИПТА
   const int wight = 24;
   const int height = 21;
-  const int startLenght = 3;
+  const int startLength = 3;
   const int lengthPerApple = 2;
 
   const float fontSize = 0.51f;
@@ -51,14 +51,21 @@ public sealed class Program : MyGridProgram
 
   public void Main(string args)
   {
-    // Echo(args);
-    rotate(args);
+    args = args.ToLower();
+    input(args);
     move();
     generateApple();
     generateField();
     checkForInside();
     checkForApple();
     display.WriteText(fieldToString());
+    try
+    {
+      Echo(apple["x"].ToString());
+      Echo(apple["y"].ToString());
+    }
+    catch (System.Exception)
+    { }
   }
 
   public void Save()
@@ -71,8 +78,8 @@ public sealed class Program : MyGridProgram
   {
     snake.Clear();
     direction = "";
-    Dictionary<string, int> apple = new Dictionary<string, int>();
-    for (int i = 0; i < startLenght; i++)
+    apple = new Dictionary<string, int>();
+    for (int i = 0; i < startLength; i++)
     {
       snake.Add(new Dictionary<string, int> {
         { "y", (int)height / 2 },
@@ -133,11 +140,11 @@ public sealed class Program : MyGridProgram
     }
   }
 
-  private void rotate(string route)
+  private void input(string route)
   {
     switch (route)
     {
-      case "Left":
+      case "left":
         switch (direction)
         {
           case "Left":
@@ -157,7 +164,7 @@ public sealed class Program : MyGridProgram
             break;
         }
         break;
-      case "Right":
+      case "right":
         switch (direction)
         {
           case "Left":
@@ -176,6 +183,9 @@ public sealed class Program : MyGridProgram
             direction = "Right";
             break;
         }
+        break;
+      case "break":
+        generateSnake();
         break;
       default:
         break;
